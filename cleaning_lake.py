@@ -43,8 +43,7 @@ with open('bif_output.txt', 'w') as bifout:
         bifout.write("\n")
 
         dpdtdummy = 0
-        dpdt = 0
-                    
+        dpdt = 0                
 
 bifout.close()
                     
@@ -58,5 +57,5 @@ with open('bif_output.txt') as val:
     plt.plot(X,Y,"o")
     plt.xlabel('P Loading')
     plt.ylabel('Chlorophyll Concentration')
-    savefig('bif.png', bbox_inches='tight') # Remove white space around the image
+    savefig('bif.png', bbox_inches='tight') # Remove white spaces around the image
     
