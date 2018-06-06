@@ -8,7 +8,7 @@ import math
 # Step 1: Define system, where x[0] = x and x[1] = y
 ###############################################################################
 def sys(t,x):
-    return np.array([ -0.5*x[0], -1*x[1] ])
+    return np.array([ x[0]+(x[1])**2, -1*x[1] ])
 ###############################################################################
 
 # Step 2: Plot vector field
@@ -19,30 +19,30 @@ ax = fig.add_subplot(1,1,1)
 
 ##Quiverplot
 # Define a grid and compute direction at each point
-x = np.linspace(-5,5,20)
-y = np.linspace(-5,5,20)
+x = np.linspace(-30,30,60)
+y = np.linspace(-30,30,60)
 
 x1 , y1 = np.meshgrid(x,y)                     #create a grid
 dx , dy = sys(0,[x1,y1])                       #compute growth rate on the grid
-ax.quiver(x1, y1, dx, dy, pivot='mid')
+# ax.quiver(x1, y1, dx, dy, pivot='mid')
 
 ## If you want your vectors to be normalized, do the following:
 ## 1. Comment out line 27.
 ## 2. Uncomment lines 32-36
-# m = (np.hypot(dx, dy))                       # norm growth rate 
-# m[ m == 0] = 1.                              # avoid zero division errors 
-# dx /= m                                      # normalize each arrows
-# dy /= m
-# ax.quiver(x1, y1, dx, dy, m, pivot='mid')
+m = (np.hypot(dx, dy))                       # norm growth rate 
+m[ m == 0] = 1.                              # avoid zero division errors 
+dx /= m                                      # normalize each arrows
+dy /= m
+ax.quiver(x1, y1, dx, dy, m, pivot='mid')
 
 
 # Step 3: Solution curves
 ################################################################################
-t0 = 0; tEnd = 3; dt = 0.01;
+t0 = 0; tEnd = 5; dt = 0.01;
 r = ode(sys).set_integrator('vode', method='bdf',max_step=dt)
 
 ## Set as many initial conditions as needed
-ic = [[-2,-2],[-1,2]]
+ic = [[-6,-5],[-6,-4.5],[-6,-4.3],[-6,-4]]
 
 for k in range(len(ic)):
     Y = [];T = [];S = [];
@@ -52,7 +52,9 @@ for k in range(len(ic)):
         Y.append(r.y)
 
     S = np.array(np.real(Y))
-    ax.plot(S[:,0],S[:,1], lw = 1.25)
+    ax.plot(S[:,0],S[:,1],color = 'k', lw = 1.25)
+    ax.set_xlim(-10,10)
+    ax.set_ylim(-10,10)
 
 ## Graph labels ##
 ax.grid()
