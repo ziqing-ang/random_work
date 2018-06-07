@@ -47,14 +47,14 @@ r = ode(sys).set_integrator('vode', method='bdf',max_step=dt)
 # 48, changing the points as needed:
 # ic = [[0,1],[1,3]]
 #///////////////////////////////
-x = -6; y = -5
-s = [[x,y]]; step = 0.1
+point = [-6, -5]
+s = [[point[0],point[1]]]; step = 0.1
 a = np.arange(-5,5,step)
 for j in range(len(a)):
     new=[];
     while len(s)<=len(a):
-        y = y+step
-        new = [x,y]
+        point[1] = point[1]+step
+        new = [point[0],point[1]]
         s.append(new)
 
 ic = s
