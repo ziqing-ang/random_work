@@ -19,21 +19,21 @@ ax = fig.add_subplot(1,1,1)
 
 ##Quiverplot
 # Define a grid and compute direction at each point
-x = np.linspace(-30,30,60)
-y = np.linspace(-30,30,60)
+x = np.linspace(-5,5,21)
+y = np.linspace(-5,5,21)
 
 x1 , y1 = np.meshgrid(x,y)                     #create a grid
 dx , dy = sys(0,[x1,y1])                       #compute growth rate on the grid
-# ax.quiver(x1, y1, dx, dy, pivot='mid')
+ax.quiver(x1, y1, dx, dy, pivot='mid')
 
 ## If you want your vectors to be normalized, do the following:
 ## 1. Comment out line 27.
 ## 2. Uncomment lines 32-36
-m = (np.hypot(dx, dy))                       # norm growth rate 
-m[ m == 0] = 1.                              # avoid zero division errors 
-dx /= m                                      # normalize each arrows
-dy /= m
-ax.quiver(x1, y1, dx, dy, m, pivot='mid')
+# m = (np.hypot(dx, dy))                       # norm growth rate 
+# m[ m == 0] = 1.                              # avoid zero division errors 
+# dx /= m                                      # normalize each arrows
+# dy /= m
+# ax.quiver(x1, y1, dx, dy, m, pivot='mid')
 
 
 # Step 3: Solution curves
@@ -42,8 +42,24 @@ t0 = 0; tEnd = 5; dt = 0.01;
 r = ode(sys).set_integrator('vode', method='bdf',max_step=dt)
 
 ## Set as many initial conditions as needed
-ic = [[-6,-5],[-6,-4.5],[-6,-4.3],[-6,-4]]
+# Use the loop below to plot a range of initial points
+# If only a few points are desired, disable the section below and enable line
+# 48, changing the points as needed:
+# ic = [[0,1],[1,3]]
+#///////////////////////////////s = [[-6,-5]] 
+x = -6; y = -5
+s = [[x,y]]; step = 0.1
+a = np.arange(-5,5,step)
+for j in range(len(a)):
+    new=[];
+    while len(s)<=len(a):
+        y = y+step
+        new = [x,y]
+        s.append(new)
+        j = j+1
 
+ic = s
+#//////////////////////////////
 for k in range(len(ic)):
     Y = [];T = [];S = [];
     r.set_initial_value(ic[k], t0).set_f_params()
@@ -53,8 +69,8 @@ for k in range(len(ic)):
 
     S = np.array(np.real(Y))
     ax.plot(S[:,0],S[:,1],color = 'k', lw = 1.25)
-    ax.set_xlim(-10,10)
-    ax.set_ylim(-10,10)
+    ax.set_xlim(-5,5)
+    ax.set_ylim(-5,5)
 
 ## Graph labels ##
 ax.grid()
