@@ -56,7 +56,6 @@ for j in range(len(a)):
         y = y+step
         new = [x,y]
         s.append(new)
-        j = j+1
 
 ic = s
 #//////////////////////////////
