@@ -47,7 +47,6 @@ r = ode(sys).set_integrator('vode', method='bdf',max_step=dt)
 # 48, changing the points as needed:
 # ic = [[0,1],[1,3]]
 #///////////////////////////////
-s = [[-6,-5]] 
 x = -6; y = -5
 s = [[x,y]]; step = 0.1
 a = np.arange(-5,5,step)
